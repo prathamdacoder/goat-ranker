@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== BASIC SEO ===== -->
+    <title>GOAT Ranker - Vote for the Greatest Of All Time | Best YouTubers, Games & More</title>
+    <meta name="description" content="Vote for the GOAT! Real-time rankings for the best YouTubers, games, drinks, and anything else. Add your own and see who the community crowns as the greatest of all time.">
+    <meta name="keywords" content="goat ranker, vote goat, best youtuber 2026, top ranker, mrbeast vs ishowspeed, rank anything, community voting, greatest of all time">
+    <meta name="author" content="GOAT Ranker">
+    <meta name="robots" content="index, follow">
+
+    <!-- ===== OPEN GRAPH (WhatsApp / Discord / Twitter previews) ===== -->
+    <meta property="og:title" content="GOAT Ranker - Vote for the Greatest Of All Time 🐐">
+    <meta property="og:description" content="Real-time community voting for YouTubers, games, and anything else. Who's the GOAT?">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://goat-ranker.onrender.com">
+    <meta property="og:image" content="https://goat-ranker.onrender.com/preview.png">
+
+    <!-- ===== TWITTER CARD ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GOAT Ranker - Vote for the GOAT 🐐">
+    <meta name="twitter:description" content="Vote for who's truly the greatest. Real-time rankings.">
+
+    <!-- ===== CANONICAL URL (prevents duplicate content) ===== -->
+    <link rel="canonical" href="https://goat-ranker.onrender.com">
+
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐐</text></svg>">
+
+    <!-- ===== STRUCTURED DATA (Google likes this) ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "GOAT Ranker",
+      "description": "Real-time community voting platform for ranking the greatest of all time.",
+      "url": "https://goat-ranker.onrender.com",
+      "applicationCategory": "EntertainmentApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="nav">
+        <h1>GOAT<span>RANKER</span></h1>
+        <p>Vote for the Greatest Of All Time 🐐</p>
+    </div>
+
+    <div class="container">
+        <div class="add-section">
+            <input id="nameInput" placeholder="Add something to rank..." maxlength="50">
+            <button onclick="addItem()">ADD</button>
+        </div>
+
+        <div id="rankList"></div>
+
+        <!-- SEO: Hidden but Google reads this -->
+        <section style="margin-top: 60px; padding: 30px; background: #111; border-radius: 12px;">
+            <h2 style="color: #ff0055;">What is GOAT Ranker?</h2>
+            <p style="color: #aaa; line-height: 1.7;">
+                GOAT Ranker is a real-time community voting platform where users decide who or what is truly the
+                Greatest Of All Time. Vote for top YouTubers like MrBeast and IShowSpeed, rank the best drinks
+                like Prime, or add anything you want the world to rank. Every vote counts and the leaderboard
+                updates live.
+            </p>
+            <h3 style="color: #ff0055; margin-top: 20px;">How it works</h3>
+            <p style="color: #aaa; line-height: 1.7;">
+                1. Add anything you want ranked.<br>
+                2. Click the 🔺 button to upvote your favorites.<br>
+                3. Watch the leaderboard update in real-time.<br>
+                4. Share with friends and let the community decide the GOAT.
+            </p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
