@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="NSPj-8U_BkGX4OjF0Ncs0K-ncSpqY7xFQA2ivDSFhDM" />
+    
+    <title id="pageTitle">Loading... | GOAT Ranker</title>
+    <meta id="pageDesc" name="description" content="Vote for the GOAT.">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" id="canonicalLink" href="https://goat-ranker.onrender.com">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐐</text></svg>">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="nav">
+        <a href="/" style="text-decoration:none;color:inherit;">
+            <h1>GOAT<span>RANKER</span></h1>
+        </a>
+        <p id="categoryLabel">Loading...</p>
+        <a href="/" class="back-btn">← All Categories</a>
+    </div>
+
+    <div class="container">
+        <div class="add-section">
+            <input id="nameInput" placeholder="Add something to this category..." maxlength="50">
+            <button onclick="addItem()">ADD</button>
+        </div>
+
+        <div id="rankList"></div>
+    </div>
+
+    <script>
+        // Get category from URL
+        const category = window.location.pathname.replace('/', '');
+        
+        // Category info for SEO
+        const categoryInfo = {
+            youtubers: { 
+                title: "Best YouTubers Ranked 2026 🐐 | Vote MrBeast vs IShowSpeed | GOAT Ranker",
+                desc: "Who's the best YouTuber? Vote MrBeast, IShowSpeed, Kai Cenat and more. Real-time community rankings updated every second.",
+                emoji: "🎬",
+                label: "Top YouTubers Ranked"
+            },
+            games: { 
+                title: "Best Games Ranked 2026 🎮 | Vote Fortnite, Minecraft, GTA 6 | GOAT Ranker",
+                desc: "What's the best game of all time? Vote Fortnite vs Minecraft vs GTA 6. Real-time gaming rankings.",
+                emoji: "🎮",
+                label: "Top Games Ranked"
+            },
+            drinks: { 
+                title: "Best Drinks Ranked 🥤 | Prime vs Red Bull vs Monster | GOAT Ranker",
+                desc: "What's the best drink? Vote Prime flavors, Red Bull, Monster, and more. Community-ranked beverage list.",
+                emoji: "🥤",
+                label: "Top Drinks Ranked"
+            },
+            music: { 
+                title: "Best Music Artists Ranked 🎵 | Drake vs Kendrick | GOAT Ranker",
+                desc: "Who's the GOAT rapper? Vote Drake, Kendrick, Travis Scott and more. Real-time music rankings.",
+                emoji: "🎵",
+                label: "Top Music Artists"
+            },
+            sports: { 
+                title: "Best Athletes Ranked ⚽ | Messi vs Ronaldo vs LeBron | GOAT Ranker",
+                desc: "Who's the GOAT athlete? Vote Messi vs Ronaldo, LeBron vs Jordan. Real-time sports rankings.",
+                emoji: "⚽",
+                label: "Top Athletes Ranked"
+            },
+            other: { 
+                title: "Random GOAT Rankings 🐐 | Vote Anything | GOAT Ranker",
+                desc: "Vote on anything. Random rankings for the greatest of all time across all topics.",
+                emoji: "🐐",
+                label: "Other Rankings"
+            }
+        };
+
+        const info = categoryInfo[category] || categoryInfo.other;
+        
+        // Update page SEO
+        document.getElementById('pageTitle').textContent = info.title;
+        document.getElementById('pageDesc').setAttribute('content', info.desc);
+        document.getElementById('categoryLabel').textContent = `${info.emoji} ${info.label}`;
+        document.getElementById('canonicalLink').setAttribute('href', `https://goat-ranker.onrender.com/${category}`);
+        document.title = info.title;
+
+        async function loadList() {
+            const res = await fetch(`/api/items?category=${category}`);
+            const items = await res.json();
+            const list = document.getElementById("rankList");
+            list.innerHTML = "";
+
+            if (items.length === 0) {
+                list.innerHTML = '<p style="text-align:center;color:#666;padding:40px;">No items yet. Add the first one! 🚀</p>';
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const div = document.createElement("div");
+                div.className = "item-card";
+                div.innerHTML = `
+                    <div class="left-side">
+                        <span class="rank-num">#${index + 1}</span>
+                        <span class="item-name">${item.name}</span>
+                    </div>
+                    <div class="right-side">
+                        <span class="vote-count">${item.votes}</span>
+                        <div class="upvote-btn" onclick="vote(${item.id})">🔺</div>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        async function vote(id) {
+            await fetch("/api/vote", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id })
+            });
+            loadList();
+        }
+
+        async function addItem() {
+            const input = document.getElementById("nameInput");
+            const name = input.value.trim();
+            if (!name) return;
+
+            await fetch("/api/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, category })
+            });
+
+            input.value = "";
+            loadList();
+        }
+
+        document.getElementById("nameInput").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") addItem();
+        });
+
+        loadList();
+    </script>
+</body>
+</html>
